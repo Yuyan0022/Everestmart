@@ -30,10 +30,10 @@ header {
     cursor: pointer;
 }
 
-/* Side Menu */
+/* Side Menu with Fade + Slide */
 .side-menu {
     height: 100%;
-    width: 250px;             /* fixed width */
+    width: 250px;
     position: fixed;
     top: 0;
     left: 0;
@@ -41,9 +41,9 @@ header {
     padding-top: 60px;
     z-index: 1000;
 
-    transform: translateX(-100%);  /* menu is hidden offscreen */
-    opacity: 0;                     /* menu is invisible initially */
-    transition: transform 0.4s ease, opacity 0.4s ease; /* smooth slide + fade */
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .side-menu a {
@@ -59,7 +59,6 @@ header {
     background-color: #0b3c5d;
 }
 
-/* Close Button */
 .side-menu .close-btn {
     position: absolute;
     top: 15px;
@@ -89,6 +88,8 @@ header {
     text-align: center;
     color: white;
     position: relative;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .hero::after {
@@ -112,11 +113,14 @@ header {
 .section {
     padding: 60px 20px;
     text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    display: none; /* hide all sections initially */
 }
 
-.section h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
+/* Show first section by default */
+.section:first-of-type {
+    display: block;
 }
 
 /* Cards */
@@ -159,21 +163,14 @@ footer {
 <!-- Side Navigation -->
 <div id="sideMenu" class="side-menu">
     <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
-    <a href="#about" onclick="closeMenu()">About Us</a>
-    <a href="#services" onclick="closeMenu()">Services</a>
-    <a href="#careers" onclick="closeMenu()">Careers</a>
-    <a href="#offers" onclick="closeMenu()">Our Offers</a>
-    <a href="#terms" onclick="closeMenu()">Terms of Use</a>
-    <a href="#policy" onclick="closeMenu()">Privacy Policy</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
+    <a href="#" onclick="showSection('about')">About Us</a>
+    <a href="#" onclick="showSection('services')">Services</a>
+    <a href="#" onclick="showSection('careers')">Careers</a>
+    <a href="#" onclick="showSection('offers')">Our Offers</a>
+    <a href="#" onclick="showSection('terms')">Terms of Use</a>
+    <a href="#" onclick="showSection('policy')">Privacy Policy</a>
+    <a href="#" onclick="showSection('contact')">Contact</a>
 </div>
-
-<section class="hero">
-    <div class="hero-content">
-        <h1>Empowering Better Online Platforms</h1>
-        <p>Helping e-commerce brands improve ratings, trust & customer satisfaction</p>
-    </div>
-</section>
 
 <section id="about" class="section">
     <h2>About Us</h2>
@@ -185,37 +182,37 @@ footer {
     <div class="card-container">
         <div class="card">
             <h3>Rating Analysis</h3>
-            <p>We conduct in-depth analysis of customer reviews and rating trends to uncover key insights. This enables platforms to address concerns, strengthen trust, and improve overall brand reputation.</p>
+            <p>In-depth analysis of customer reviews and rating trends to improve reputation and trust.</p>
         </div>
         <div class="card">
             <h3>Performance Improvement</h3>
-            <p>We provide strategic recommendations to enhance delivery efficiency, customer service quality, and return management processes. Our goal is to improve operational performance and customer satisfaction.</p>
+            <p>Strategic recommendations to enhance delivery, customer service, and operational efficiency.</p>
         </div>
         <div class="card">
             <h3>Marketplace Comparison</h3>
-            <p>We analyze and compare leading online platforms to identify strengths, weaknesses, and competitive gaps. This helps businesses understand market positioning and improve their overall strategy.</p>
+            <p>Compare leading platforms to identify strengths, weaknesses, and competitive gaps.</p>
         </div>
     </div>
 </section>
 
 <section id="careers" class="section">
     <h2>Careers</h2>
-    <p>At Everest Global Mart, we welcome passionate professionals who want to contribute to improving global e-commerce standards. We offer opportunities in research, data analysis, customer experience evaluation, and digital strategy. Our team values innovation, transparency, and continuous learning. Join us to help build more trusted and efficient online platforms worldwide.</p>
+    <p>We welcome passionate professionals in research, analytics, and digital strategy to improve global e-commerce standards.</p>
 </section>
 
 <section id="offers" class="section" style="background:#ffffff;">
     <h2>Our Offers</h2>
-    <p>We provide customized performance improvement packages tailored to online marketplaces of all sizes. Our services include rating optimization strategies, detailed platform audits, and customer experience enhancement plans. We also offer competitive benchmarking reports to help businesses stay ahead in the digital marketplace. Flexible consulting options are available to meet specific business needs.</p>
+    <p>Customized performance improvement packages, rating optimization strategies, and competitive benchmarking reports tailored for online marketplaces.</p>
 </section>
 
 <section id="terms" class="section">
     <h2>Terms of Use</h2>
-    <p>By accessing and using this website, you agree to comply with our terms and conditions. All content provided on this platform is for informational and advisory purposes only. Unauthorized reproduction, distribution, or misuse of website materials is strictly prohibited. Everest Global Mart reserves the right to update services, policies, or content without prior notice.</p>
+    <p>By accessing and using this website, you agree to comply with our terms. Unauthorized reproduction or misuse of materials is prohibited.</p>
 </section>
 
 <section id="policy" class="section" style="background:#ffffff;">
     <h2>Privacy Policy</h2>
-    <p>We respect and protect your privacy. Any information collected through this website is used solely for communication and service improvement purposes. We do not sell, rent, or share personal information with third parties without consent, except where required by law. We implement reasonable security measures to protect user data from unauthorized access.</p>
+    <p>We respect your privacy and protect your personal information. Data is used only for communication and service improvement purposes.</p>
 </section>
 
 <section id="contact" class="section">
@@ -224,22 +221,56 @@ footer {
 </section>
 
 <footer>
-    <p>© 2014 Everest Global Mart | All Rights Reserved</p>
+    <p>© 2026 Everest Global Mart | All Rights Reserved</p>
 </footer>
 
 <script>
+// Open / Close side menu
 function openMenu() {
-    document.getElementById("sideMenu").style.width = "250px";
-    document.getElementById("overlay").style.display = "block";
+    const menu = document.getElementById("sideMenu");
+    const overlay = document.getElementById("overlay");
+    menu.style.transform = "translateX(0)";
+    menu.style.opacity = "1";
+    overlay.style.display = "block";
 }
 
 function closeMenu() {
-    document.getElementById("sideMenu").style.width = "0";
-    document.getElementById("overlay").style.display = "none";
+    const menu = document.getElementById("sideMenu");
+    const overlay = document.getElementById("overlay");
+    menu.style.transform = "translateX(-100%)";
+    menu.style.opacity = "0";
+    overlay.style.display = "none";
+}
+
+// Fade between sections
+let currentSection = 'about';
+function showSection(id) {
+    if (id === currentSection) return;
+    const oldSection = document.getElementById(currentSection);
+    const newSection = document.getElementById(id);
+
+    // Fade out current
+    oldSection.style.opacity = 0;
+
+    setTimeout(() => {
+        oldSection.style.display = 'none';
+        newSection.style.display = 'block';
+        newSection.style.opacity = 0;
+
+        // Small delay to trigger fade in
+        setTimeout(() => {
+            newSection.style.opacity = 1;
+        }, 50);
+
+        currentSection = id;
+    }, 400);
+
+    closeMenu(); // close menu after click
 }
 </script>
 
 </body>
 </html>
+
 
 
