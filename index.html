@@ -33,15 +33,17 @@ header {
 /* Side Menu */
 .side-menu {
     height: 100%;
-    width: 0;
+    width: 250px;             /* fixed width */
     position: fixed;
     top: 0;
     left: 0;
     background-color: #062f4f;
-    overflow-x: hidden;
-    transition: 0.4s;
     padding-top: 60px;
     z-index: 1000;
+
+    transform: translateX(-100%);  /* menu is hidden offscreen */
+    opacity: 0;                     /* menu is invisible initially */
+    transition: transform 0.4s ease, opacity 0.4s ease; /* smooth slide + fade */
 }
 
 .side-menu a {
@@ -239,4 +241,5 @@ function closeMenu() {
 
 </body>
 </html>
+
 
