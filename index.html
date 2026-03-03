@@ -4,11 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Everest Global Mart</title>
-
 <style>
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f4f6f9;
 }
 
@@ -21,7 +20,7 @@ header {
     position: relative;
 }
 
-/* Hamburger Button */
+/* Hamburger Menu */
 .menu-icon {
     position: absolute;
     left: 20px;
@@ -30,7 +29,7 @@ header {
     cursor: pointer;
 }
 
-/* Side Menu (old slide style) */
+/* Side Menu */
 .side-menu {
     height: 100%;
     width: 0;
@@ -41,7 +40,7 @@ header {
     padding-top: 60px;
     overflow-x: hidden;
     z-index: 1000;
-    transition: 0.3s; /* smooth slide */
+    transition: 0.3s;
 }
 
 .side-menu a {
@@ -50,7 +49,6 @@ header {
     font-size: 18px;
     color: white;
     display: block;
-    transition: 0.3s;
 }
 
 .side-menu a:hover {
@@ -80,13 +78,14 @@ header {
 .section {
     padding: 60px 20px;
     text-align: center;
-    opacity: 1;
-    transition: opacity 0.5s ease;
     display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.section:first-of-type {
+.section.active {
     display: block;
+    opacity: 1;
 }
 
 /* Hero */
@@ -96,11 +95,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     color: white;
     position: relative;
-    opacity: 1;
-    transition: opacity 0.5s ease;
 }
 
 .hero::after {
@@ -146,7 +142,6 @@ footer {
 }
 </style>
 </head>
-
 <body>
 
 <div id="overlay" onclick="closeMenu()"></div>
@@ -169,47 +164,47 @@ footer {
     <a href="#" onclick="showSection('contact')">Contact</a>
 </div>
 
-<section id="about" class="section">
+<section id="about" class="section active">
     <h2>About Us</h2>
-    <p>Everest Global Mart is an independent platform dedicated to improving online marketplace performance and trust. We analyze ratings, customer feedback, and service quality to help e-commerce platforms grow responsibly. Our focus is on transparency, efficiency, and customer satisfaction. Through data-driven insights and strategic recommendations, we support sustainable digital growth worldwide.</p>
+    <p>Everest Global Mart is an independent platform dedicated to improving online marketplace performance and trust. We analyze ratings, customer feedback, and service quality to help e-commerce platforms grow responsibly. Our focus is on transparency, efficiency, and customer satisfaction.</p>
 </section>
 
-<section id="services" class="section" style="background:#ffffff;">
+<section id="services" class="section">
     <h2>Our Services</h2>
     <div class="card-container">
         <div class="card">
             <h3>Rating Analysis</h3>
-            <p>In-depth analysis of customer reviews and rating trends to improve reputation and trust.</p>
+            <p>Analyze customer reviews and rating trends to improve trust.</p>
         </div>
         <div class="card">
             <h3>Performance Improvement</h3>
-            <p>Strategic recommendations to enhance delivery, customer service, and operational efficiency.</p>
+            <p>Improve delivery, customer service, and operations.</p>
         </div>
         <div class="card">
             <h3>Marketplace Comparison</h3>
-            <p>Compare leading platforms to identify strengths, weaknesses, and competitive gaps.</p>
+            <p>Compare platforms to identify strengths and weaknesses.</p>
         </div>
     </div>
 </section>
 
 <section id="careers" class="section">
     <h2>Careers</h2>
-    <p>We welcome passionate professionals in research, analytics, and digital strategy to improve global e-commerce standards.</p>
+    <p>Join our team to improve global e-commerce standards through research and analytics.</p>
 </section>
 
-<section id="offers" class="section" style="background:#ffffff;">
+<section id="offers" class="section">
     <h2>Our Offers</h2>
-    <p>Customized performance improvement packages, rating optimization strategies, and competitive benchmarking reports tailored for online marketplaces.</p>
+    <p>Customized improvement packages and benchmarking reports for online marketplaces.</p>
 </section>
 
 <section id="terms" class="section">
     <h2>Terms of Use</h2>
-    <p>By accessing and using this website, you agree to comply with our terms. Unauthorized reproduction or misuse of materials is prohibited.</p>
+    <p>By accessing this website, you agree to comply with our terms and conditions.</p>
 </section>
 
-<section id="policy" class="section" style="background:#ffffff;">
+<section id="policy" class="section">
     <h2>Privacy Policy</h2>
-    <p>We respect your privacy and protect your personal information. Data is used only for communication and service improvement purposes.</p>
+    <p>We respect your privacy and only use data for service improvements.</p>
 </section>
 
 <section id="contact" class="section">
@@ -222,44 +217,33 @@ footer {
 </footer>
 
 <script>
-// Open / Close side menu (old-style slide)
+// Side menu functions
 function openMenu() {
-    document.getElementById("sideMenu").style.width = "250px"; // slide in
+    document.getElementById("sideMenu").style.width = "250px";
     document.getElementById("overlay").style.display = "block";
 }
-
 function closeMenu() {
-    document.getElementById("sideMenu").style.width = "0"; // slide out
+    document.getElementById("sideMenu").style.width = "0";
     document.getElementById("overlay").style.display = "none";
 }
 
-// Fade between sections
+// Section navigation with fade
 let currentSection = 'about';
 function showSection(id) {
     if (id === currentSection) return;
+
     const oldSection = document.getElementById(currentSection);
     const newSection = document.getElementById(id);
 
-    oldSection.style.opacity = 0;
-
+    oldSection.classList.remove('active');
     setTimeout(() => {
-        oldSection.style.display = 'none';
-        newSection.style.display = 'block';
-        newSection.style.opacity = 0;
+        newSection.classList.add('active');
+    }, 50);
 
-        setTimeout(() => {
-            newSection.style.opacity = 1;
-        }, 50);
-
-        currentSection = id;
-    }, 400);
-
-    closeMenu(); // close menu after click
+    currentSection = id;
+    closeMenu();
 }
 </script>
 
 </body>
 </html>
-
-
-
