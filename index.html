@@ -30,18 +30,18 @@ header {
     cursor: pointer;
 }
 
-/* Side Menu */
+/* Side Menu (old slide style) */
 .side-menu {
     height: 100%;
-    width: 250px;
+    width: 0;
     position: fixed;
     top: 0;
-    left: -250px; /* start offscreen */
+    left: 0;
     background-color: #062f4f;
     padding-top: 60px;
+    overflow-x: hidden;
     z-index: 1000;
-    transition: left 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
+    transition: 0.3s; /* smooth slide */
 }
 
 .side-menu a {
@@ -222,21 +222,15 @@ footer {
 </footer>
 
 <script>
-// Open / Close side menu with slide + fade
+// Open / Close side menu (old-style slide)
 function openMenu() {
-    const menu = document.getElementById("sideMenu");
-    const overlay = document.getElementById("overlay");
-    menu.style.left = "0";  // slide in
-    menu.style.opacity = "1"; // fade in
-    overlay.style.display = "block";
+    document.getElementById("sideMenu").style.width = "250px"; // slide in
+    document.getElementById("overlay").style.display = "block";
 }
 
 function closeMenu() {
-    const menu = document.getElementById("sideMenu");
-    const overlay = document.getElementById("overlay");
-    menu.style.left = "-250px";  // slide out
-    menu.style.opacity = "0";    // fade out
-    overlay.style.display = "none";
+    document.getElementById("sideMenu").style.width = "0"; // slide out
+    document.getElementById("overlay").style.display = "none";
 }
 
 // Fade between sections
@@ -260,7 +254,7 @@ function showSection(id) {
         currentSection = id;
     }, 400);
 
-    closeMenu();
+    closeMenu(); // close menu after click
 }
 </script>
 
