@@ -30,20 +30,18 @@ header {
     cursor: pointer;
 }
 
-/* Side Menu with Fade + Slide */
+/* Side Menu */
 .side-menu {
     height: 100%;
     width: 250px;
     position: fixed;
     top: 0;
-    left: 0;
+    left: -250px; /* start offscreen */
     background-color: #062f4f;
     padding-top: 60px;
     z-index: 1000;
-
-    transform: translateX(-100%);
+    transition: left 0.4s ease, opacity 0.4s ease;
     opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .side-menu a {
@@ -78,7 +76,20 @@ header {
     z-index: 900;
 }
 
-/* Hero Section */
+/* Sections */
+.section {
+    padding: 60px 20px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    display: none;
+}
+
+.section:first-of-type {
+    display: block;
+}
+
+/* Hero */
 .hero {
     background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     height: 500px;
@@ -107,20 +118,6 @@ header {
 
 .hero h1 {
     font-size: 48px;
-}
-
-/* Sections */
-.section {
-    padding: 60px 20px;
-    text-align: center;
-    opacity: 1;
-    transition: opacity 0.5s ease;
-    display: none; /* hide all sections initially */
-}
-
-/* Show first section by default */
-.section:first-of-type {
-    display: block;
 }
 
 /* Cards */
@@ -160,7 +157,7 @@ footer {
     <p>Improving Online Platform Ratings & Trust Worldwide</p>
 </header>
 
-<!-- Side Navigation -->
+<!-- Side Menu -->
 <div id="sideMenu" class="side-menu">
     <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
     <a href="#" onclick="showSection('about')">About Us</a>
@@ -225,20 +222,20 @@ footer {
 </footer>
 
 <script>
-// Open / Close side menu
+// Open / Close side menu with slide + fade
 function openMenu() {
     const menu = document.getElementById("sideMenu");
     const overlay = document.getElementById("overlay");
-    menu.style.transform = "translateX(0)";
-    menu.style.opacity = "1";
+    menu.style.left = "0";  // slide in
+    menu.style.opacity = "1"; // fade in
     overlay.style.display = "block";
 }
 
 function closeMenu() {
     const menu = document.getElementById("sideMenu");
     const overlay = document.getElementById("overlay");
-    menu.style.transform = "translateX(-100%)";
-    menu.style.opacity = "0";
+    menu.style.left = "-250px";  // slide out
+    menu.style.opacity = "0";    // fade out
     overlay.style.display = "none";
 }
 
@@ -249,7 +246,6 @@ function showSection(id) {
     const oldSection = document.getElementById(currentSection);
     const newSection = document.getElementById(id);
 
-    // Fade out current
     oldSection.style.opacity = 0;
 
     setTimeout(() => {
@@ -257,7 +253,6 @@ function showSection(id) {
         newSection.style.display = 'block';
         newSection.style.opacity = 0;
 
-        // Small delay to trigger fade in
         setTimeout(() => {
             newSection.style.opacity = 1;
         }, 50);
@@ -265,7 +260,7 @@ function showSection(id) {
         currentSection = id;
     }, 400);
 
-    closeMenu(); // close menu after click
+    closeMenu();
 }
 </script>
 
